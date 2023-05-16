@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 
  
 
-const Sample = ({selcted,setSelect}:any) => {
+const Sample = ({selcted}:any) => {
  let [selectedItems, setSelectedItems] = React.useState<any>([]);
  let [refData, setRefData] = React.useState<any>([]);
 
@@ -156,11 +156,18 @@ const Sample = ({selcted,setSelect}:any) => {
   setSelectedItems(selcted)
   },[selcted])
 
- 
+  const onSelectedItemsChange = (selectedItems1:any) => {
 
-  useEffect (()=>{
-    setSelect(selectedItems)
-    },[selectedItems])
+    // do something with selectedItems
+  
+    //console.log('Selected Items: ', selectedItems1);
+    setSelectedItems(selectedItems1);
+    localStorage.setItem('selectedItems',JSON.stringify(selectedItems1))
+    
+  
+  };
+
+ 
 
   return (
     <View style={styles.container}>
@@ -169,7 +176,7 @@ const Sample = ({selcted,setSelect}:any) => {
 
       uniqueKey="name"
 
-      onSelectedItemsChange={setSelect}
+      onSelectedItemsChange={onSelectedItemsChange}
       selectedItems={selectedItems}
 
       selectText="Pick Items"

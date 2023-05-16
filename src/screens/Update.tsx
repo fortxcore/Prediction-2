@@ -42,14 +42,14 @@ const fetchPrediction = async () => {
   console.log(text,selected);
   
   
- 
+  let items = JSON.parse(localStorage.getItem("selectedItems") || "[]");
 
   const response = await axios.post(apiEndpoint, {
     text:text,
-    symptoms: JSON.stringify([...tags, ...selected]),
+    symptoms: JSON.stringify([...tags, ...items]),
   }).then((response) => {
     console.log(response.data);
-  navigation.navigate('Report', {data: response.data,tags:[...tags, ...selected]});
+  navigation.navigate('Report', {data: response.data,tags:[...tags, ...items]});
   }
   ).catch((error) => {
     console.log(error);
@@ -129,10 +129,7 @@ console.log("available",availableData);
             paddingRight: 40,
           }}>
           
-        <Sample selcted={[...tags]} setSelect={(data:any) =>{
-          console.log("data",data);
-          setSelected(data);
-        }}/>
+        <Sample selcted={[...tags,...selected]} />
         </View>
       </Block>
 
