@@ -22,7 +22,7 @@ import {
 } from '../components';
 import axios from 'axios';
 import Sample from '../components/multipleSelect';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Update = ({route}:any) => {
   const {t} = useTranslation();
@@ -42,7 +42,7 @@ const fetchPrediction = async () => {
   console.log(text,selected);
   
   
-  let items = JSON.parse(localStorage.getItem("selectedItems") || "[]");
+  let items = await AsyncStorage.getItem("selectedItems") ?? [];
 
   const response = await axios.post(apiEndpoint, {
     text:text,

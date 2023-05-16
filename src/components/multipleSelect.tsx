@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import MultiSelect from 'react-native-multiple-select';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
  
 
 const items = [{
@@ -162,7 +162,7 @@ const Sample = ({selcted}:any) => {
   
     //console.log('Selected Items: ', selectedItems1);
     setSelectedItems(selectedItems1);
-    localStorage.setItem('selectedItems',JSON.stringify(selectedItems1))
+    AsyncStorage.setItem('selectedItems',JSON.stringify(selectedItems1))
     
   
   };
