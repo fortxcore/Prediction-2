@@ -46,10 +46,10 @@ const fetchPrediction = async () => {
 
   const response = await axios.post(apiEndpoint, {
     text:text,
-    symptoms: JSON.stringify([...tags, ...items]),
+    symptoms: JSON.stringify([...items]),
   }).then((response) => {
     console.log(response.data);
-  navigation.navigate('Report', {data: response.data,tags:[...tags, ...items]});
+  navigation.navigate('Report', {data: response.data,tags:[ ...items]});
   }
   ).catch((error) => {
     console.log(error);

@@ -162,7 +162,7 @@ const Sample = ({selcted}:any) => {
   
     //console.log('Selected Items: ', selectedItems1);
     setSelectedItems(selectedItems1);
-    AsyncStorage.setItem('selectedItems',JSON.stringify(selectedItems1))
+    AsyncStorage.setItem('selectedItems',selectedItems1)
     
   
   };
