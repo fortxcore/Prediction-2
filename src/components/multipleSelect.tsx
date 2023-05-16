@@ -156,13 +156,13 @@ const Sample = ({selcted}:any) => {
   setSelectedItems(selcted)
   },[selcted])
 
-  const onSelectedItemsChange = (selectedItems1:any) => {
+  const onSelectedItemsChange = async(selectedItems1:any) => {
 
     // do something with selectedItems
   
     //console.log('Selected Items: ', selectedItems1);
     setSelectedItems(selectedItems1);
-    AsyncStorage.setItem('selectedItems',selectedItems1)
+    await AsyncStorage.setItem('selectedItems',selectedItems1)
     
   
   };

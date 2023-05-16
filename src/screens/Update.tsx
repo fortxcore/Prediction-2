@@ -42,14 +42,14 @@ const fetchPrediction = async () => {
   console.log(text,selected);
   
   
-  let items = await AsyncStorage.getItem("selectedItems") ?? [];
+  let items = AsyncStorage.getItem("selectedItems") ;
 
   const response = await axios.post(apiEndpoint, {
     text:text,
-    symptoms: JSON.stringify([...items]),
+    symptoms: JSON.stringify(items),
   }).then((response) => {
     console.log(response.data);
-  navigation.navigate('Report', {data: response.data,tags:[ ...items]});
+  navigation.navigate('Report', {data: response.data,tags:items});
   }
   ).catch((error) => {
     console.log(error);
