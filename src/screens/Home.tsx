@@ -17,7 +17,7 @@ import {
   unicodeToDlManel,
 } from 'sinhala-unicode-coverter';
 import {Block, Switch, Image, Text} from '../components/';
-
+import * as Permissions from 'expo-permissions';
 const Home = () => {
   const {t} = useTranslation();
   const [isDark, setIsDark] = useState(false);
@@ -66,7 +66,27 @@ const Home = () => {
       return text;
     }
   };
+  useEffect(() => {
+    // Request audio recording permission
+    const getPermissions = async () => {
+      const { status } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+      if (status !== 'granted') {
+        console.log('Permission not granted!');
+      }
+    };
 
+    getPermissions();
+
+    // // Configure voice recognition settings
+    // Voice.onSpeechStart = onSpeechStart;
+    // Voice.onSpeechEnd = onSpeechEnd;
+    // Voice.onSpeechResults = onSpeechResults;
+
+    return () => {
+      // Clean up listeners when component unmounts
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, []);
   useEffect(() => {
     if (isRecording) {
       Voice.start('en-US');
