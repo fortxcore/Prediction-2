@@ -129,7 +129,10 @@ console.log("available",availableData);
             paddingRight: 40,
           }}>
           
-        <Sample selcted={[...tags]} />
+        <Sample selcted={[...tags]} setSelect={(data:any) =>{
+          console.log("data",data);
+          setSelected(data);
+        }}/>
         </View>
       </Block>
 
