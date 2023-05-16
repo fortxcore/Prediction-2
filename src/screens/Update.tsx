@@ -85,7 +85,7 @@ const data = [
   {id: '23', name: 'CHILLS',label: 'CHILLS'},
   {id: '24', name: 'JOINT_PAIN',label: 'JOINT_PAIN'},
   {id: '25', name: 'FATIGUE',label: 'FATIGUE'},
-  {id: '26', name: 'HEAD_ACHE',label: 'HEAD_ACHE'},
+  {id: '26', name: 'HEADACHE',label: 'HEADACHE'},
   {id: '27', name: 'LOSS_OF_APPETITES',label: 'LOSS_OF_APPETITES'},
   {id: '28', name: 'PAIN_BEHIND_THE_EYES',label: 'PAIN_BEHIND_THE_EYES'},
   {id: '29', name: 'BACK_PAIN',label: 'BACK_PAIN'},
