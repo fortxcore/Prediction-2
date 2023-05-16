@@ -156,15 +156,7 @@ const Sample = ({selcted,setSelect}:any) => {
   setSelectedItems(selcted)
   },[selcted])
 
-  const onSelectedItemsChange = (selectedItems1:any) => {
-
-    // do something with selectedItems
-  
-    //console.log('Selected Items: ', selectedItems1);
-    setSelectedItems(selectedItems1);
-    
-  
-  };
+ 
 
   useEffect (()=>{
     setSelect(selectedItems)
@@ -177,7 +169,7 @@ const Sample = ({selcted,setSelect}:any) => {
 
       uniqueKey="name"
 
-      onSelectedItemsChange={onSelectedItemsChange}
+      onSelectedItemsChange={setSelect}
       selectedItems={selectedItems}
 
       selectText="Pick Items"
