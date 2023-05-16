@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
 
 const Sample = ({selcted}:any) => {
  let [selectedItems, setSelectedItems] = React.useState<any>([]);
+ let [refData, setRefData] = React.useState<any>([]);
 
 
  useEffect (()=>{
@@ -160,7 +161,7 @@ const Sample = ({selcted}:any) => {
     // do something with selectedItems
   
     //console.log('Selected Items: ', selectedItems1);
-    setSelectedItems([...selectedItems , selectedItems1]);
+    setSelectedItems(selectedItems1);
   
   };
 
@@ -186,7 +187,7 @@ const Sample = ({selcted}:any) => {
 
       selectedItemTextColor="#000"
 
-      selectedItemIconColor="#CCC"
+      selectedItemIconColor="#000"
 
       itemTextColor="#000"
 
