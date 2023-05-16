@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {View, ScrollView} from 'react-native';
+import {View, ScrollView,FlatList} from 'react-native';
 
 import {useData, useTheme, useTranslation} from '../hooks/';
 import {Block, Button, Image, Text} from '../components/';
@@ -39,7 +39,23 @@ const Report = ({route}:any) => {
 
   //   fetchData();
   // }, []);
-
+  const renderTag = ({item}: {item: string}) => {
+    return (
+      <View
+        style={{
+          backgroundColor: '#666967',
+          borderRadius: 5,
+          paddingHorizontal: 10,
+          paddingVertical: 5,
+          margin: 2,
+          flex: 1,
+        }}>
+        <Text color={colors.card} numberOfLines={1} ellipsizeMode='tail'>
+          {item}
+        </Text>
+      </View>
+    );
+  };
   return (
     <Block color={colors.card}>
       <ScrollView>
@@ -77,12 +93,14 @@ const Report = ({route}:any) => {
           <Text h5 marginRight={6}>
             Symptoms:
           </Text>
-          {tags?.length > 0 &&
-            tags?.map((product:any,index:any) => (
-              <Text h5 key={index}>
-                {product}
-              </Text>
-            ))}
+          <FlatList
+  data={tags}
+  renderItem={renderTag}
+  keyExtractor={(item:any, index:any) => index.toString()}
+  numColumns={9}
+  contentContainerStyle={{padding: sizes.padding}}
+  style={{flex: 1}}
+/>
         </Block>
 
         <Block row flex={0} marginHorizontal={30} color={colors.card}>

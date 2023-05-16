@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {MultipleSelectList} from 'react-native-dropdown-select-list';
 import { useNavigation } from '@react-navigation/native';
 
@@ -31,6 +31,8 @@ const Update = ({route}:any) => {
   const [selected, setSelected] = React.useState([]);
   const navigation = useNavigation();
   const {text,tags} = route.params;
+
+  const [availableData, setAvailableData] = useState<any>([]);
 
   const apiEndpoint = 'https://backend-ap.herokuapp.com/app/predict';
 const fetchPrediction = async () => {
@@ -86,6 +88,12 @@ const fetchPrediction = async () => {
     {key: '31', value: 'RED_SPOTS_OVER_BODY'},
   ];
 
+
+
+  useEffect(() => {
+    setAvailableData(data?.filter((item:any) => !tags.includes(item.value)));
+  },[tags]);
+console.log("available",availableData);
   const handleProducts = useCallback(
     (tab: number) => {
       setTab(tab);
@@ -122,7 +130,7 @@ const fetchPrediction = async () => {
      
           
             setSelected={(val:any) => setSelected(val)}
-            data={data}
+            data={availableData}
             save="value"
             label="Categories"
             placeholder='Please select less than 15'

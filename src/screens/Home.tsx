@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import {useData, useTheme, useTranslation} from '../hooks/';
 import axios from 'axios';
@@ -92,7 +93,24 @@ const Home = () => {
   const clearTextInput = () => {
     setRecognizedText('');
   };
-
+  const renderTag = ({item}: {item: string}) => {
+    return (
+      <View
+        style={{
+          backgroundColor: '#666967',
+          borderRadius: 5,
+          paddingHorizontal: 10,
+          paddingVertical: 5,
+          margin: 2,
+          flex: 1,
+        }}>
+        <Text color={colors.card} numberOfLines={1} ellipsizeMode='tail'>
+          {item}
+        </Text>
+      </View>
+    );
+  };
+  
   return (
     <Block color={colors.card}>
       <ScrollView>
@@ -174,35 +192,15 @@ const Home = () => {
         </Block>
 
         <Block row flex={0} color={colors.card} paddingBottom={sizes.sm}>
-          <View
-            style={{
-              backgroundColor: '#666967',
-              borderRadius: 5,
-              paddingHorizontal: 10,
-              paddingVertical: 5,
-              margin: 2,
-            }}>
-            {tags?.map((tag, index) => (
-              <>
-              {
-                tag && <Text color={colors.card}>
-                {tag}
-               
-                <TouchableOpacity onPress={() =>{
-                  setTags(tags.filter((item:any) => item !== tag));
-                }}>
-                  <Image
-                    source={assets.close}
-                    color={colors.card}
-                    radius={0}
-                    style={{height: 10, width: 10}}
-                  />
-                </TouchableOpacity>
-              </Text>
-              }
-              </>
-            ))}
-          </View>
+        <FlatList
+  data={tags}
+  renderItem={renderTag}
+  keyExtractor={(item:any, index:any) => index.toString()}
+  numColumns={3}
+  contentContainerStyle={{padding: sizes.padding}}
+  style={{flex: 1}}
+/>
+
         </Block>
 
         <Block
