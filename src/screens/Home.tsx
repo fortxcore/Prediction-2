@@ -36,7 +36,7 @@ const Home = () => {
     console.log("text",symptoms)
         const response = await axios.post(apiEndpoint, {
           text: symptoms,
-          isSinhala: isDark,
+          is_sinhala: isDark,
         }).then((response) => {
           console.log(response.data);
           setTags(response.data.symptoms)

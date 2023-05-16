@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import {useData, useTheme, useTranslation} from '../hooks';
+
 import {
   Block,
   Switch,
@@ -20,6 +21,8 @@ import {
   Text,
 } from '../components';
 import axios from 'axios';
+import Sample from '../components/multipleSelect';
+
 
 const Update = ({route}:any) => {
   const {t} = useTranslation();
@@ -125,17 +128,8 @@ console.log("available",availableData);
             paddingLeft: 40,
             paddingRight: 40,
           }}>
-          <MultipleSelectList
-           
-     
           
-            setSelected={(val:any) => setSelected(val)}
-            data={availableData}
-            save="value"
-            label="Categories"
-            placeholder='Please select less than 15'
-            searchPlaceholder='Please select less than 15'
-          />
+        <Sample selcted={[...tags]} />
         </View>
       </Block>
 
