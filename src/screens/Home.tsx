@@ -33,7 +33,7 @@ const Home = () => {
 
   const fetchSynonyms = async () => {
     
-    
+    console.log("text",symptoms)
         const response = await axios.post(apiEndpoint, {
           text: symptoms,
           isSinhala: isDark,
