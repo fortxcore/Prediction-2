@@ -32,17 +32,19 @@ const Home = () => {
   const apiEndpoint = 'https://backend-ap.herokuapp.com/app/text';
 
   const fetchSynonyms = async () => {
-     console.log(symptoms,isDark);
-      const response = await axios.post(apiEndpoint, {
-        text: symptoms,
-        isSinhala: isDark,
-      }).then((response) => {
-        console.log(response.data);
-        setTags(response.data.symptoms)
-        
-      }).catch((error) => {
-        console.log(error);
-      })
+    
+    
+        const response = await axios.post(apiEndpoint, {
+          text: symptoms,
+          isSinhala: isDark,
+        }).then((response) => {
+          console.log(response.data);
+          setTags(response.data.symptoms)
+          
+        }).catch((error) => {
+          console.log(error);
+        })
+      
      
     
   };
@@ -107,6 +109,7 @@ const Home = () => {
         <Text color={colors.card} numberOfLines={1} ellipsizeMode='tail'>
           {item}
         </Text>
+
       </View>
     );
   };
@@ -166,10 +169,7 @@ const Home = () => {
             value={isRecording ? '' : recognizedText} // Use the converted text when not recording
             onChangeText={(text) => {
               let convertedText = text;
-              if (isDark) {
-                // Convert text to Sinhala
-                convertedText = singlishToUnicode(text);
-              } 
+              
               setRecognizedText(convertedText);
               setSymptoms(text);
             }}

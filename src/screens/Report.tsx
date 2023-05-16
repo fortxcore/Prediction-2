@@ -39,21 +39,14 @@ const Report = ({route}:any) => {
 
   //   fetchData();
   // }, []);
+  
   const renderTag = ({item}: {item: string}) => {
     return (
-      <View
-        style={{
-          backgroundColor: '#666967',
-          borderRadius: 5,
-          paddingHorizontal: 10,
-          paddingVertical: 5,
-          margin: 2,
-          flex: 1,
-        }}>
-        <Text color={colors.card} numberOfLines={1} ellipsizeMode='tail'>
-          {item}
+     
+        <Text color={colors.black} numberOfLines={1} ellipsizeMode='tail'>
+          {item}{","}
         </Text>
-      </View>
+
     );
   };
   return (
@@ -93,13 +86,19 @@ const Report = ({route}:any) => {
           <Text h5 marginRight={6}>
             Symptoms:
           </Text>
-          <FlatList
+          {/* {tags?.length > 0 &&
+            tags?.map((product:any,index:any) => (
+              <Text h5 key={index}>
+                {product}{","}
+              </Text>
+            ))} */}
+            <FlatList
   data={tags}
   renderItem={renderTag}
   keyExtractor={(item:any, index:any) => index.toString()}
-  numColumns={9}
+  numColumns={2}
   contentContainerStyle={{padding: sizes.padding}}
-  style={{flex: 1}}
+  style={{flex: 2}}
 />
         </Block>
 
