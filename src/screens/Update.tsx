@@ -35,12 +35,16 @@ const Update = ({route}:any) => {
   const apiEndpoint = 'https://backend-ap.herokuapp.com/app/predict';
 const fetchPrediction = async () => {
   console.log(text,selected);
+  
+  
+ 
+
   const response = await axios.post(apiEndpoint, {
     text:text,
-    symptoms: [...tags, ...selected],
+    symptoms: JSON.stringify([...tags, ...selected]),
   }).then((response) => {
     console.log(response.data);
-  navigation.navigate('Report', {data: response.data});
+  navigation.navigate('Report', {data: response.data,tags:[...tags, ...selected]});
   }
   ).catch((error) => {
     console.log(error);
@@ -114,6 +118,9 @@ const fetchPrediction = async () => {
             paddingRight: 40,
           }}>
           <MultipleSelectList
+           
+     
+          
             setSelected={(val:any) => setSelected(val)}
             data={data}
             save="value"
@@ -132,7 +139,7 @@ const fetchPrediction = async () => {
         color={colors.card}>
         <TouchableOpacity
           onPress={() => {
-            fetchPrediction(selected);
+            fetchPrediction();
           }}
           style={{
             alignItems: 'center',

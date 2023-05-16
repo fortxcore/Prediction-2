@@ -85,6 +85,7 @@ const Home = () => {
   };
 
   Voice.onSpeechResults = (event:any) => {
+    console.log(event.value[0]);
     setRecognizedText(event.value[0]);
   };
 
@@ -150,10 +151,7 @@ const Home = () => {
               if (isDark) {
                 // Convert text to Sinhala
                 convertedText = singlishToUnicode(text);
-              } else {
-                // Convert text to English
-                convertedText = unicodeToDlManel(text);
-              }
+              } 
               setRecognizedText(convertedText);
               setSymptoms(text);
             }}

@@ -12,7 +12,7 @@ const Report = ({route}:any) => {
   const [products, setProducts] = useState<any[]>([]);
   const {assets, colors, gradients, sizes} = useTheme();
   const navigation = useNavigation();
-  const {data} = route.params;
+  const {data,tags} = route.params;
   const handleProducts = useCallback(
     (tab: number) => {
       setTab(tab);
@@ -21,9 +21,9 @@ const Report = ({route}:any) => {
     [following, trending, setTab, setProducts],
   );
 
-  useEffect(() => {
-    setProducts(data.symptoms);
-  },[data]);
+  // useEffect(() => {
+  //   setProducts(data.symptoms);
+  // },[data]);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -77,10 +77,10 @@ const Report = ({route}:any) => {
           <Text h5 marginRight={6}>
             Symptoms:
           </Text>
-          {products.length > 0 &&
-            products.map((product,index) => (
+          {tags?.length > 0 &&
+            tags?.map((product:any,index:any) => (
               <Text h5 key={index}>
-                {product.symptom}
+                {product}
               </Text>
             ))}
         </Block>
