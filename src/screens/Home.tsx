@@ -87,13 +87,28 @@ const Home = () => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
   }, []);
-  useEffect(() => {
-    if (isRecording) {
-      Voice.start('en-US');
-    } else {
-      Voice.stop();
-    }
+  useEffect( () => {
+    fetchRecording(isRecording);
   }, [isRecording]);
+  const fetchRecording = async (isRecording:any) => {
+    if (isRecording) {
+      try {
+        // Code that triggers the promise from react-native-voice
+        await Voice.start('en-US');
+      } catch (error) {
+        // Handle the error here
+        console.error(error);
+      }
+    } else {
+      try {
+        // Code that triggers the promise from react-native-voice
+        await Voice.stop();
+      } catch (error) {
+        // Handle the error here
+        console.error(error);
+      }
+    }
+  };
 
   const onStartRecording = useCallback(() => {
     setIsRecording(true);

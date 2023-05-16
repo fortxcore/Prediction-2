@@ -162,9 +162,13 @@ const Sample = ({selcted,setSelect}:any) => {
   
     //console.log('Selected Items: ', selectedItems1);
     setSelectedItems(selectedItems1);
-    setSelect(selectedItems1)
+    
   
   };
+
+  useEffect (()=>{
+    setSelect(selectedItems)
+    },[selectedItems])
 
   return (
     <View style={styles.container}>
