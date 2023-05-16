@@ -7,6 +7,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  StyleSheet
 } from 'react-native';
 
 import {useData, useTheme, useTranslation} from '../hooks';
@@ -23,6 +24,7 @@ import {
 import axios from 'axios';
 import Sample from '../components/multipleSelect';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MultiSelect from 'react-native-multiple-select';
 
 const Update = ({route}:any) => {
   const {t} = useTranslation();
@@ -42,14 +44,14 @@ const fetchPrediction = async () => {
   console.log(text,selected);
   
   
-  let items = AsyncStorage.getItem("selectedItems") ;
+  
 
   const response = await axios.post(apiEndpoint, {
     text:text,
-    symptoms: JSON.stringify(items),
+    symptoms: selected?.length > 0 ? JSON.stringify(selected) : JSON.stringify(tags),
   }).then((response) => {
     console.log(response.data);
-  navigation.navigate('Report', {data: response.data,tags:items});
+  navigation.navigate('Report', {data: response.data,tags:selected?.length > 0 ? selected : tags});
   }
   ).catch((error) => {
     console.log(error);
@@ -57,40 +59,72 @@ const fetchPrediction = async () => {
   )
 }
 
-  const data = [
-    {key: '1', value: 'COUGH'},
-    {key: '2', value: 'MUSCLE_ACHES'},
-    {key: '3', value: 'TIREDNESS'},
-    {key: '4', value: 'SORE_THROAT'},
-    {key: '5', value: 'RUNNY_NOSE'},
-    {key: '6', value: 'STUFFY_NOSE'},
-    {key: '7', value: 'FEVER'},
-    {key: '8', value: 'NAUSEA'},
-    {key: '9', value: 'VOMITING'},
-    {key: '10', value: 'DIARRHEA'},
-    {key: '11', value: 'SHORTNESS_OF_BREATH'},
-    {key: '12', value: 'DIFFICULTY_BREATHING'},
-    {key: '13', value: 'LOSS_OF_TASTE'},
-    {key: '14', value: 'LOSS_OF_SMELL'},
-    {key: '15', value: 'ITCHY_NOSE'},
-    {key: '16', value: 'ITCHY_EYES'},
-    {key: '17', value: 'ITCHY_MOUTH'},
-    {key: '18', value: 'Appliances'},
-    {key: '19', value: 'ITCHY_INNER_EAR'},
-    {key: '20', value: 'SNEEZING'},
-    {key: '21', value: 'PINK_EYE'},
-    {key: '22', value: 'SKIN_RASH'},
-    {key: '23', value: 'CHILLS'},
-    {key: '24', value: 'JOINT_PAIN'},
-    {key: '25', value: 'FATIGUE'},
-    {key: '26', value: 'HEAD_ACHE'},
-    {key: '27', value: 'LOSS_OF_APPETITES'},
-    {key: '28', value: 'PAIN_BEHIND_THE_EYES'},
-    {key: '29', value: 'BACK_PAIN'},
-    {key: '30', value: 'MALAISE'},
-    {key: '31', value: 'RED_SPOTS_OVER_BODY'},
-  ];
+const data = [
+  {id: '1', name: 'COUGH',label: 'COUGH'},
+  {id: '2', name: 'MUSCLE_ACHES',label: 'MUSCLE_ACHES'},
+  {id: '3', name: 'TIREDNESS',label: 'TIREDNESS'},
+  {id: '4', name: 'SORE_THROAT',label: 'SORE_THROAT'},
+  {id: '5', name: 'RUNNY_NOSE',label: 'RUNNY_NOSE'},
+  {id: '6', name: 'STUFFY_NOSE',label: 'STUFFY_NOSE'},
+  {id: '7', name: 'FEVER',label: 'FEVER'},
+  {id: '8', name: 'NAUSEA',label: 'NAUSEA'},
+  {id: '9', name: 'VOMITING',label: 'VOMITING'},
+  {id: '10', name: 'DIARRHEA',label: 'DIARRHEA'},
+  {id: '11', name: 'SHORTNESS_OF_BREATH',label: 'SHORTNESS_OF_BREATH'},
+  {id: '12', name: 'DIFFICULTY_BREATHING',label: 'DIFFICULTY_BREATHING'},
+  {id: '13', name: 'LOSS_OF_TASTE',label: 'LOSS_OF_TASTE'},
+  {id: '14', name: 'LOSS_OF_SMELL',label: 'LOSS_OF_SMELL'},
+  {id: '15', name: 'ITCHY_NOSE',label: 'ITCHY_NOSE'},
+  {id: '16', name: 'ITCHY_EYES',label: 'ITCHY_EYES'},
+  {id: '17', name: 'ITCHY_MOUTH',label: 'ITCHY_MOUTH'},
+  {id: '18', name: 'Appliances',label: 'Appliances'},
+  {id: '19', name: 'ITCHY_INNER_EAR',label: 'ITCHY_INNER_EAR'},
+  {id: '20', name: 'SNEEZING',label: 'SNEEZING'},
+  {id: '21', name: 'PINK_EYE',label: 'PINK_EYE'},
+  {id: '22', name: 'SKIN_RASH',label: 'SKIN_RASH'},
+  {id: '23', name: 'CHILLS',label: 'CHILLS'},
+  {id: '24', name: 'JOINT_PAIN',label: 'JOINT_PAIN'},
+  {id: '25', name: 'FATIGUE',label: 'FATIGUE'},
+  {id: '26', name: 'HEAD_ACHE',label: 'HEAD_ACHE'},
+  {id: '27', name: 'LOSS_OF_APPETITES',label: 'LOSS_OF_APPETITES'},
+  {id: '28', name: 'PAIN_BEHIND_THE_EYES',label: 'PAIN_BEHIND_THE_EYES'},
+  {id: '29', name: 'BACK_PAIN',label: 'BACK_PAIN'},
+  {id: '30', name: 'MALAISE',label: 'MALAISE'},
+  {id: '31', name: 'RED_SPOTS_OVER_BODY',label: 'RED_SPOTS_OVER_BODY'},
+];
+  const styles = StyleSheet.create({
 
+    container: {
+  
+      flex: 1,
+  
+      backgroundColor: '#F5FCFF',
+  
+      padding: 10,
+  
+    },
+  
+    welcome: {
+  
+      fontSize: 20,
+  
+      textAlign: 'center',
+  
+      margin: 30,
+  
+    },
+  
+    instructions: {
+  
+      textAlign: 'center',
+  
+      color: '#333333',
+  
+      marginBottom: 5,
+  
+    },
+  
+  });
 
 
   useEffect(() => {
@@ -104,6 +138,25 @@ console.log("available",availableData);
     },
     [following, trending, setTab, setProducts],
   );
+  let [selectedItems, setSelectedItems] = React.useState<any>([]);
+
+  useEffect(()=>{
+   setSelectedItems(tags);
+  },[])
+
+
+
+  const onSelectedItemsChange = async(selectedItems1:any) => {
+    console.log("selected",selectedItems1)
+
+    // do something with selectedItems
+  
+    //console.log('Selected Items: ', selectedItems1);
+    setSelectedItems(selectedItems1);
+    setSelected(selectedItems1);
+    
+  
+  };
 
   return (
     <Block color={colors.card}>
@@ -129,7 +182,41 @@ console.log("available",availableData);
             paddingRight: 40,
           }}>
           
-        <Sample selcted={[...tags,...selected]} />
+          <View style={styles.container}>
+    <MultiSelect
+      items={data}
+
+      uniqueKey="name"
+
+      onSelectedItemsChange={onSelectedItemsChange}
+      selectedItems={selectedItems}
+
+      selectText="Pick Items"
+
+      searchInputPlaceholderText="Search Items..."
+
+      tagRemoveIconColor="#CCC"
+
+      tagBorderColor="#CCC"
+
+      tagTextColor="#000"
+
+      selectedItemTextColor="#000"
+
+      selectedItemIconColor="#000"
+
+      itemTextColor="#000"
+
+      searchInputStyle={{ color: '#CCC' }}
+
+      submitButtonColor="#CCC"
+
+      submitButtonText="Submit"
+    
+
+    />
+
+  </View>
         </View>
       </Block>
 
