@@ -123,6 +123,7 @@ const Home = () => {
   const startSpeechToText = async () => {
     setIsRecording(true);
     setSymptoms("I have cough, fever, sneezing")
+    setRecognizedText('I have cough, fever, sneezing');
     try {
       await Voice.start("en-US");
     }
