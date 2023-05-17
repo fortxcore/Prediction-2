@@ -18,6 +18,7 @@ import {
 } from 'sinhala-unicode-coverter';
 import {Block, Switch, Image, Text} from '../components/';
 import * as Permissions from 'expo-permissions';
+import { set } from 'react-native-reanimated';
 const Home = () => {
   const {t} = useTranslation();
   const [isDark, setIsDark] = useState(false);
@@ -87,48 +88,65 @@ const Home = () => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
   }, []);
-  useEffect( () => {
-    fetchRecording(isRecording);
-  }, [isRecording]);
-  const fetchRecording = async (isRecording:any) => {
-    if (isRecording) {
-      try {
-        // Code that triggers the promise from react-native-voice
-        await Voice.start('en-US');
-      } catch (error) {
-        // Handle the error here
-        console.error(error);
-      }
-    } else {
-      try {
-        // Code that triggers the promise from react-native-voice
-        await Voice.stop();
-      } catch (error) {
-        // Handle the error here
-        console.error(error);
-      }
+  // useEffect( () => {
+  //   fetchRecording(isRecording);
+  // }, [isRecording]);
+  // const fetchRecording = async (isRecording:any) => {
+  //   if (isRecording) {
+  //     try {
+  //       // Code that triggers the promise from react-native-voice
+  //       await Voice.start('en-US');
+  //     } catch (error) {
+  //       // Handle the error here
+  //       console.error(error);
+  //     }
+  //   } else {
+  //     try {
+  //       // Code that triggers the promise from react-native-voice
+  //       await Voice.stop();
+  //     } catch (error) {
+  //       // Handle the error here
+  //       console.error(error);
+  //     }
+  //   }
+  // };
+
+  useEffect(() => {
+    Voice.onSpeechError = onSpeechError;
+    Voice.onSpeechResults = onSpeechResults;
+
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    }
+  }, []);
+
+  const startSpeechToText = async () => {
+    setIsRecording(true);
+    try {
+      await Voice.start("en-US");
+    }
+    catch (e) {
+      console.error(e);
+    }
+    
+  };
+
+  const stopSpeechToText = async () => {
+    setIsRecording(false);
+    try {
+      await Voice.stop();
+    }
+    catch (e) {
+      console.error(e);
     }
   };
 
-  const onStartRecording = useCallback(() => {
-    setIsRecording(true);
-  }, []);
-
-  const onStopRecording = useCallback(() => {
-    setIsRecording(false);
-  }, []);
-
-  Voice.onSpeechStart = () => {
-    setRecognizedText('');
+  const onSpeechResults = (result:any) => {
+   console.log("res",result);
   };
 
-  Voice.onSpeechResults = (event:any) => {
-    console.log(event.value[0]);
-    setRecognizedText(event.value[0]);
-  };
-
-  const clearTextInput = () => {
-    setRecognizedText('');
+  const onSpeechError = (error:any) => {
+    console.log(error);
   };
   const renderTag = ({item}: {item: string}) => {
     return (
@@ -147,6 +165,10 @@ const Home = () => {
 
       </View>
     );
+  };
+
+  const clearTextInput = () => {
+    setRecognizedText('');
   };
   
   return (
@@ -244,7 +266,7 @@ const Home = () => {
           paddingBottom={sizes.sm}
           alignItems="center">
           <TouchableOpacity
-            onPress={isRecording ? onStopRecording : onStartRecording}>
+            onPress={isRecording ? stopSpeechToText : startSpeechToText}>
             <Image
               source={assets?.mic}
               style={{
