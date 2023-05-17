@@ -143,6 +143,7 @@ const Home = () => {
 
   const onSpeechResults = (result:any) => {
    console.log("res",result);
+   setSymptoms(result.value[0]);
   };
 
   const onSpeechError = (error:any) => {
