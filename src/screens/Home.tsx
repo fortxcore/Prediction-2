@@ -122,6 +122,7 @@ const Home = () => {
 
   const startSpeechToText = async () => {
     setIsRecording(true);
+    setSymptoms("I have cough, fever, sneezing")
     try {
       await Voice.start("en-US");
     }
@@ -261,11 +262,7 @@ const Home = () => {
 
         </Block>
 
-        <Block
-          flex={0}
-          color={colors.card}
-          paddingBottom={sizes.sm}
-          alignItems="center">
+      
           <TouchableOpacity
             onPress={isRecording ? stopSpeechToText : startSpeechToText}>
             <Image
@@ -280,7 +277,7 @@ const Home = () => {
           <Text p style={{marginBottom: 1}}>
             {isRecording ? 'Recording...' : 'start recording'}
           </Text>
-        </Block>
+      
 
         <Block
           row
