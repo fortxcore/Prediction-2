@@ -122,8 +122,8 @@ const Home = () => {
 
   const startSpeechToText = async () => {
     setIsRecording(true);
-    setSymptoms("I have cough, fever, sneezing")
-    setRecognizedText('I have cough, fever, sneezing');
+    setRecognizedText('I have cough, fever, sneezing')
+    setSymptoms('I have cough, fever, sneezing')
     try {
       await Voice.start("en-US");
     }
@@ -145,7 +145,6 @@ const Home = () => {
 
   const onSpeechResults = (result:any) => {
    console.log("res",result);
-   setSymptoms(result.value[0]);
   };
 
   const onSpeechError = (error:any) => {
@@ -263,7 +262,11 @@ const Home = () => {
 
         </Block>
 
-      
+        <Block
+          flex={0}
+          color={colors.card}
+          paddingBottom={sizes.sm}
+          alignItems="center">
           <TouchableOpacity
             onPress={isRecording ? stopSpeechToText : startSpeechToText}>
             <Image
@@ -278,7 +281,7 @@ const Home = () => {
           <Text p style={{marginBottom: 1}}>
             {isRecording ? 'Recording...' : 'start recording'}
           </Text>
-      
+        </Block>
 
         <Block
           row
